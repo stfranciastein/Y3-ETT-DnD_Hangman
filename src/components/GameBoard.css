@@ -138,7 +138,8 @@
   border: 2px solid rgba(138, 43, 226, 0.5);
   border-radius: 10px;
   padding: 1rem;
-  margin: 1rem 0;
+  margin: 1rem auto;
+  max-width: 90%;
   animation: slideIn 0.3s ease-out;
 }
 
@@ -390,21 +391,12 @@
     height: 42px;
   }
 
-  .word-display {
-    font-size: 1.8rem;
-    letter-spacing: 0.3rem;
-  }
-
   .hint-controls {
     position: static;
     transform: none;
     flex-direction: row;
     justify-content: center;
     margin-bottom: 1rem;
-  }
-
-  .word-display {
-    flex-direction: column;
   }
 
   .hangman-svg {
@@ -449,11 +441,6 @@
 }
 
 @media (max-width: 480px) {
-  .word-display {
-    font-size: 1.4rem;
-    letter-spacing: 0.2rem;
-  }
-
   .keyboard {
     gap: 0.25rem;
   }

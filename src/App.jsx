@@ -132,11 +132,6 @@ export default function App() {
   if (initialLoading) {
     return (
       <div className="app">
-              <svg viewBox="0 0 24 24" fill="currentColor" style={{width: '32px', height: '32px', marginRight: '12px', display: 'inline', verticalAlign: 'middle'}}>
-                <path d="M21 4H7C5.9 4 5 4.9 5 6V18C5 19.1 5.9 20 7 20H21C21.6 20 22 19.6 22 19V5C22 4.4 21.6 4 21 4ZM21 18H7V6H21V18Z M9 8H19V10H9V8Z M9 12H19V14H9V12Z M9 16H16V18H9V16Z" />
-              </svg>
-              Mordenkainen's Tome of Everything
-            
         <div className="initial-loading">
           <div className="initial-loading-content">
             <h1 className="loading-title">📖 Mordenkainen's Tome of Everything</h1>

@@ -8,6 +8,7 @@ export default function GameBoard({ gameData, category, onNewGame }) {
   const [gameLost, setGameLost] = useState(false);
   const [showHint, setShowHint] = useState(false);
   const [hintLevel, setHintLevel] = useState(0);
+  const [maxRevealedHintLevel, setMaxRevealedHintLevel] = useState(0);
   const [isDesktop, setIsDesktop] = useState(window.innerWidth > 768);
   const maxWrongGuesses = 6;
   const maxHints = 3;
@@ -28,6 +29,7 @@ export default function GameBoard({ gameData, category, onNewGame }) {
     setGameLost(false);
     setShowHint(false);
     setHintLevel(0);
+    setMaxRevealedHintLevel(0);
   }, [gameData]);
 
   useEffect(() => {
@@ -157,9 +159,8 @@ export default function GameBoard({ gameData, category, onNewGame }) {
   };
 
   const handleNextHint = () => {
-    if (hintLevel < maxHints) {
+    if (hintLevel < maxRevealedHintLevel) {
       setHintLevel(hintLevel + 1);
-      setShowHint(true);
     }
   };
 
@@ -170,14 +171,16 @@ export default function GameBoard({ gameData, category, onNewGame }) {
   };
 
   const toggleHint = () => {
-    if (showHint) {
-      setShowHint(false);
-    } else {
-      if (hintLevel === 0) {
-        handleNextHint();
-      } else {
-        setShowHint(true);
-      }
+    if (maxRevealedHintLevel < maxHints) {
+      // Reveal next hint
+      const nextLevel = maxRevealedHintLevel + 1;
+      setMaxRevealedHintLevel(nextLevel);
+      setHintLevel(nextLevel);
+      setShowHint(true);
+    } else if (hintLevel < maxHints) {
+      // All hints revealed, just advance to next one
+      setHintLevel(hintLevel + 1);
+      setShowHint(true);
     }
   };
 
@@ -192,8 +195,8 @@ export default function GameBoard({ gameData, category, onNewGame }) {
           <button 
             className="hint-icon-btn"
             onClick={toggleHint}
-            disabled={gameWon || gameLost}
-            title={`Hint ${hintLevel}/${maxHints}`}
+            disabled={gameWon || gameLost || maxRevealedHintLevel >= maxHints}
+            title={maxRevealedHintLevel < maxHints ? `Reveal Hint ${maxRevealedHintLevel + 1}/${maxHints}` : `All hints revealed`}
           >
             <span className="hint-icon">?</span>
           </button>
@@ -257,7 +260,7 @@ export default function GameBoard({ gameData, category, onNewGame }) {
             <button 
               className="hint-nav-btn"
               onClick={handleNextHint}
-              disabled={hintLevel >= maxHints}
+              disabled={hintLevel >= maxRevealedHintLevel}
             >
               ›
             </button>
