@@ -46,6 +46,13 @@
   min-height: 4rem;
 }
 
+.word-group {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0;
+}
+
 .letter-box {
   width: 50px;
   height: 60px;

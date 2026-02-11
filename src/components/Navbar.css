@@ -2,9 +2,10 @@
   background: rgba(10, 5, 20, 0.9);
   backdrop-filter: blur(10px);
   border-bottom: 2px solid rgba(138, 43, 226, 0.5);
-  padding: 1rem 2rem;
+  padding: 1rem 0;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   position: relative;
+  z-index: 100;
 }
 
 .navbar-container {
@@ -14,14 +15,18 @@
   align-items: center;
   gap: 1.5rem;
   position: relative;
+  padding: 0 2rem;
 }
 
 .burger-menu {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
   width: 40px;
   height: 40px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px solid rgba(138, 43, 226, 0.3);
-  border-radius: 8px;
+  background: transparent;
+  border: none;
   color: #fff;
   cursor: pointer;
   display: flex;
@@ -30,6 +35,7 @@
   transition: all 0.3s ease;
   padding: 0;
   flex-shrink: 0;
+  z-index: 101;
 }
 
 .burger-menu svg {
@@ -38,9 +44,7 @@
 }
 
 .burger-menu:hover {
-  background: rgba(138, 43, 226, 0.3);
-  border-color: rgba(138, 43, 226, 0.6);
-  transform: translateY(-2px);
+  opacity: 0.7;
 }
 
 .navbar-title {
@@ -56,6 +60,7 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  margin-left: 40px;
 }
 
 .book-icon {
@@ -65,32 +70,94 @@
   flex-shrink: 0;
 }
 
-.category-menu {
-  position: absolute;
-  top: calc(100% + 1rem);
-  left: 2rem;
-  background: rgba(10, 5, 20, 0.95);
-  border: 2px solid rgba(138, 43, 226, 0.5);
-  border-radius: 10px;
-  padding: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  min-width: 200px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-  animation: slideDown 0.3s ease-out;
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+  animation: fadeIn 0.3s ease-out;
 }
 
-@keyframes slideDown {
+@keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(-10px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
+}
+
+.category-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 280px;
+  background: #000000;
+  border-right: 2px solid rgba(138,43, 226, 0.5);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.7);
+  z-index: 1001;
+  animation: slideInFromLeft 0.3s ease-out;
+  overflow-y: auto;
+}
+
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.menu-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid rgba(138, 43, 226, 0.3);
+}
+
+.menu-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  background: linear-gradient(45deg, #ff6ec7, #b794f6, #48dbfb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+}
+
+.close-menu-btn {
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.close-menu-btn:hover {
+  opacity: 0.7;
+}
+
+.close-menu-btn svg {
+  width: 24px;
+  height: 24px;
 }
 
 .category-menu-item {
@@ -111,7 +178,6 @@
 .category-menu-item:hover {
   background: rgba(138, 43, 226, 0.3);
   border-color: rgba(138, 43, 226, 0.6);
-  transform: translateX(5px);
 }
 
 .category-menu-item.active {
@@ -148,7 +214,11 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .navbar {
-    padding: 1rem;
+    padding: 1rem 0;
+  }
+
+  .navbar-container {
+    padding: 0 1rem;
   }
 
   .navbar-title {
@@ -166,7 +236,7 @@
   }
 
   .category-menu {
-    left: 1rem;
+    width: 240px;
   }
 }
 
@@ -191,8 +261,11 @@
   }
 
   .category-menu {
-    left: 0.5rem;
-    min-width: 180px;
+    width: 220px;
+  }
+
+  .menu-title {
+    font-size: 1.2rem;
   }
 
   .category-menu-item {

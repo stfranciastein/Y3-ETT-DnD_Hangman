@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import './GameBoard.css';
 
 export default function GameBoard({ gameData, category, onNewGame }) {
@@ -49,6 +49,16 @@ export default function GameBoard({ gameData, category, onNewGame }) {
     }
   }, [wrongGuesses]);
 
+  const handleGuess = useCallback((letter) => {
+    if (guessedLetters.includes(letter) || gameWon || gameLost) return;
+
+    setGuessedLetters([...guessedLetters, letter]);
+
+    if (!word.includes(letter)) {
+      setWrongGuesses(wrongGuesses + 1);
+    }
+  }, [guessedLetters, gameWon, gameLost, word, wrongGuesses]);
+
   useEffect(() => {
     // Handle window resize to detect desktop/mobile
     const handleResize = () => {
@@ -73,17 +83,7 @@ export default function GameBoard({ gameData, category, onNewGame }) {
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [isDesktop, guessedLetters, gameWon, gameLost, word]);
-
-  const handleGuess = (letter) => {
-    if (guessedLetters.includes(letter) || gameWon || gameLost) return;
-
-    setGuessedLetters([...guessedLetters, letter]);
-
-    if (!word.includes(letter)) {
-      setWrongGuesses(wrongGuesses + 1);
-    }
-  };
+  }, [isDesktop, handleGuess]);
 
   const handleRevealLetter = () => {
     if (gameWon || gameLost) return;
@@ -112,15 +112,43 @@ export default function GameBoard({ gameData, category, onNewGame }) {
 
   const renderWordBoxes = () => {
     const wordData = displayWord();
-    return wordData.map(item => {
+    const words = [];
+    let currentWord = [];
+    
+    wordData.forEach((item, index) => {
       if (item.type === 'space') {
-        return <div key={item.key} className="word-space"></div>;
-      } else if (item.type === 'dash' || item.type === 'apostrophe' || item.type === 'slash') {
-        return <div key={item.key} className="word-punctuation">{item.char}</div>;
-      } else if (item.type === 'letter') {
+        if (currentWord.length > 0) {
+          words.push({ type: 'word', items: currentWord, key: `word-${words.length}` });
+          currentWord = [];
+        }
+        words.push({ type: 'space', key: `space-${index}` });
+      } else {
+        currentWord.push(item);
+      }
+    });
+    
+    if (currentWord.length > 0) {
+      words.push({ type: 'word', items: currentWord, key: `word-${words.length}` });
+    }
+    
+    return words.map(word => {
+      if (word.type === 'space') {
+        return <div key={word.key} className="word-space"></div>;
+      } else if (word.type === 'word') {
         return (
-          <div key={item.key} className="letter-box">
-            {item.char}
+          <div key={word.key} className="word-group">
+            {word.items.map(item => {
+              if (item.type === 'dash' || item.type === 'apostrophe' || item.type === 'slash') {
+                return <div key={item.key} className="word-punctuation">{item.char}</div>;
+              } else if (item.type === 'letter') {
+                return (
+                  <div key={item.key} className="letter-box">
+                    {item.char}
+                  </div>
+                );
+              }
+              return null;
+            })}
           </div>
         );
       }
