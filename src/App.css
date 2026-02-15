@@ -55,11 +55,19 @@ body::before {
   width: 100%;
   height: 100%;
   background-image: url('./assets/parchment.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  filter: saturate(0.8) brightness(1.1);
+  background-size: auto;
+  background-repeat: repeat;
+  filter: saturate(0.8);
   z-index: -1;
+  transition: opacity 0.3s ease;
+}
+
+body[data-theme="dark"]::before {
+  opacity: 0;
+}
+
+body[data-theme="dark"] {
+  background-color: #0f0f0f;
 }
 
 .app {

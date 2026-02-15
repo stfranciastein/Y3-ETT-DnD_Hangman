@@ -17,31 +17,33 @@
 .score-display {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
   margin-bottom: 1rem;
-  padding: 1rem;
-  background: linear-gradient(135deg, var(--accent-color-light), var(--accent-color-medium));
-  border-radius: 12px;
-  border: 2px solid var(--accent-color);
-}
-
-.score-value {
-  font-family: 'Cinzel', serif;
-  font-size: 2.5rem;
-  font-weight: 900;
-  color: var(--accent-color);
-  line-height: 1;
-  text-shadow: 0 2px 4px var(--shadow-color);
 }
 
 .score-label {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-top: 0.25rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: left;
+}
+
+.score-bar {
+  width: 100%;
+  height: 30px;
+  background: var(--bg-tertiary);
+  border: 2px solid var(--border-color);
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+}
+
+.score-fill {
+  height: 100%;
+  transition: width 0.5s ease, background-color 0.5s ease;
+  border-radius: 13px;
+  box-shadow: 0 0 10px currentColor;
 }
 
 .books-display {
@@ -360,14 +362,6 @@
     padding: 1rem;
   }
 
-  .score-value {
-    font-size: 2rem;
-  }
-
-  .score-label {
-    font-size: 0.8rem;
-  }
-
   .word-display {
     gap: 0.25rem;
   }
@@ -438,14 +432,6 @@
 }
 
 @media (max-width: 480px) {
-  .score-value {
-    font-size: 1.75rem;
-  }
-
-  .score-label {
-    font-size: 0.75rem;
-  }
-
   .keyboard {
     gap: 0.25rem;
   }

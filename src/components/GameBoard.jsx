@@ -265,14 +265,17 @@ export default function GameBoard({ gameData, category, onNewGame, setGameContro
     onNewGame();
   };
 
+  const getScoreColor = () => {
+    if (score >= 700) return '#22c55e'; // Green
+    if (score >= 400) return '#f59e0b'; // Orange
+    return '#dc2626'; // Red
+  };
+
+  const scorePercentage = (score / 1000) * 100;
+
   return (
     <div className="game-board">
       <div className="game-container">
-        <div className="score-display">
-          <div className="score-value">{score}</div>
-          <div className="score-label">Score</div>
-        </div>
-
         {renderBooks()}
 
         <div className="word-display">
@@ -337,6 +340,19 @@ export default function GameBoard({ gameData, category, onNewGame, setGameContro
               ))}
             </div>
           ))}
+        </div>
+
+        <div className="score-display">
+          <div className="score-label">Score: {score}</div>
+          <div className="score-bar">
+            <div 
+              className="score-fill" 
+              style={{
+                width: `${scorePercentage}%`,
+                backgroundColor: getScoreColor()
+              }}
+            />
+          </div>
         </div>
 
         <button className="new-game-btn" onClick={handleNewGame}>
