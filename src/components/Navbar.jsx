@@ -1,0 +1,77 @@
+import { useState } from 'react';
+import './Navbar.css';
+
+export default function Navbar({ currentCategory, onCategoryChange }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const categories = [
+    { 
+      id: 'spells', 
+      label: 'Spells',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M12 2L15 8L21 9L16 14L18 21L12 17L6 21L8 14L3 9L9 8L12 2Z" />
+        </svg>
+      )
+    },
+    { 
+      id: 'monsters', 
+      label: 'Monsters',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M12 2C10 2 8 3 8 5C8 7 9 8 9 10C9 11 8 12 7 12C6 12 5 11 5 10L3 12C3 14 4 15 5 16C4 17 3 18 3 20C3 21 4 22 6 22C8 22 9 21 10 20C11 21 12 22 14 22C15 22 16 21 17 20C18 21 19 22 21 22C23 22 24 21 24 20C24 18 23 17 22 16C23 15 24 14 24 12L22 10C22 11 21 12 20 12C19 12 18 11 18 10C18 8 19 7 19 5C19 3 17 2 15 2C14 2 13 3 12 4C11 3 10 2 9 2H12Z" />
+        </svg>
+      )
+    },
+    { 
+      id: 'equipment', 
+      label: 'Items',
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M6.5 2L3 5.5L8.5 11L6 13.5L8.5 16L11 13.5L16.5 19L20 15.5L14.5 10L17 7.5L14.5 5L12 7.5L6.5 2Z" />
+        </svg>
+      )
+    }
+  ];
+
+  return (
+    <nav className="navbar">
+      <div className="navbar-container">
+        <button 
+          className="burger-menu"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle menu"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M3 12h18M3 6h18M3 18h18" strokeLinecap="round" />
+          </svg>
+        </button>
+        
+        <h1 className="navbar-title">
+          <svg viewBox="0 0 24 24" fill="currentColor" className="book-icon">
+            <path d="M21 4H7C5.9 4 5 4.9 5 6V18C5 19.1 5.9 20 7 20H21C21.6 20 22 19.6 22 19V5C22 4.4 21.6 4 21 4ZM21 18H7V6H21V18Z M9 8H19V10H9V8Z M9 12H19V14H9V12Z M9 16H16V18H9V16Z" />
+          </svg>
+          Mordenkainen's Tome of Everything
+        </h1>
+        
+        {menuOpen && (
+          <div className="category-menu">
+            {categories.map(cat => (
+              <button
+                key={cat.id}
+                className={`category-menu-item ${currentCategory === cat.id ? 'active' : ''}`}
+                onClick={() => {
+                  onCategoryChange(cat.id);
+                  setMenuOpen(false);
+                }}
+              >
+                <span className="category-icon">{cat.icon}</span>
+                <span className="category-label">{cat.label}</span>
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    </nav>
+  );
+}
