@@ -49,10 +49,7 @@ export default function Navbar({ currentCategory, onCategoryChange, gameControls
           </button>
           
           <h1 className="navbar-title">
-            <svg viewBox="0 0 24 24" fill="currentColor" className="book-icon">
-              <path d="M21 4H7C5.9 4 5 4.9 5 6V18C5 19.1 5.9 20 7 20H21C21.6 20 22 19.6 22 19V5C22 4.4 21.6 4 21 4ZM21 18H7V6H21V18Z M9 8H19V10H9V8Z M9 12H19V14H9V12Z M9 16H16V18H9V16Z" />
-            </svg>
-            Mordenkainen's Tome of Everything
+            TOME
           </h1>
           
           <div className="navbar-controls">

@@ -121,7 +121,7 @@ export default function App() {
                 Graphics drivers are out of date or corrupted.
                 <br />
                 <br />
-                The arcane energies required to render Mordenkainen's Tome cannot be channeled properly.
+                The arcane energies required to render the TOME cannot be channeled properly.
               </p>
               <div className="error-details">
                 <p><strong>Required:</strong> Mystical Graphics Driver v20.24 or higher</p>
@@ -149,7 +149,7 @@ export default function App() {
       <div className="app">
         <div className="initial-loading">
           <div className="initial-loading-content">
-            <h1 className="loading-title">📖 Mordenkainen's Tome of Everything</h1>
+            <h1 className="loading-title">TOME</h1>
             <div className="book-loader">
               <svg viewBox="0 0 100 120" className="book-svg">
                 {/* Book outline */}
