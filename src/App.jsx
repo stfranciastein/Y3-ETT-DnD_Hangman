@@ -11,6 +11,21 @@ export default function App() {
   const [initialLoading, setInitialLoading] = useState(true);
   const [joke, setJoke] = useState('');
   const [driverError, setDriverError] = useState(false);
+  const [theme, setTheme] = useState('light');
+  const [gameControls, setGameControls] = useState({
+    onHintClick: () => {},
+    onRevealLetter: () => {},
+    hintDisabled: true,
+    revealDisabled: true,
+    hintTitle: 'Reveal Hint 1/3',
+    maxRevealedHintLevel: 0,
+    maxHints: 3
+  });
+
+  // Apply theme to document body
+  useEffect(() => {
+    document.body.setAttribute('data-theme', theme);
+  }, [theme]);
 
   const fetchCategoryData = async (selectedCategory) => {
     setLoading(true);
@@ -138,24 +153,24 @@ export default function App() {
             <div className="book-loader">
               <svg viewBox="0 0 100 120" className="book-svg">
                 {/* Book outline */}
-                <rect x="20" y="10" width="60" height="80" fill="none" stroke="#8a2be2" strokeWidth="2" rx="2"/>
+                <rect x="20" y="10" width="60" height="80" fill="none" stroke="#dc2626" strokeWidth="2" rx="2"/>
                 {/* Book spine */}
-                <line x1="35" y1="10" x2="35" y2="90" stroke="#8a2be2" strokeWidth="2"/>
+                <line x1="35" y1="10" x2="35" y2="90" stroke="#dc2626" strokeWidth="2"/>
                 {/* Pages */}
-                <line x1="40" y1="25" x2="70" y2="25" stroke="#b794f6" strokeWidth="1" opacity="0.5"/>
-                <line x1="40" y1="35" x2="65" y2="35" stroke="#b794f6" strokeWidth="1" opacity="0.5"/>
-                <line x1="40" y1="45" x2="70" y2="45" stroke="#b794f6" strokeWidth="1" opacity="0.5"/>
-                <line x1="40" y1="55" x2="68" y2="55" stroke="#b794f6" strokeWidth="1" opacity="0.5"/>
-                <line x1="40" y1="65" x2="70" y2="65" stroke="#b794f6" strokeWidth="1" opacity="0.5"/>
-                <line x1="40" y1="75" x2="65" y2="75" stroke="#b794f6" strokeWidth="1" opacity="0.5"/>
+                <line x1="40" y1="25" x2="70" y2="25" stroke="#f87171" strokeWidth="1" opacity="0.5"/>
+                <line x1="40" y1="35" x2="65" y2="35" stroke="#f87171" strokeWidth="1" opacity="0.5"/>
+                <line x1="40" y1="45" x2="70" y2="45" stroke="#f87171" strokeWidth="1" opacity="0.5"/>
+                <line x1="40" y1="55" x2="68" y2="55" stroke="#f87171" strokeWidth="1" opacity="0.5"/>
+                <line x1="40" y1="65" x2="70" y2="65" stroke="#f87171" strokeWidth="1" opacity="0.5"/>
+                <line x1="40" y1="75" x2="65" y2="75" stroke="#f87171" strokeWidth="1" opacity="0.5"/>
                 
                 {/* Filling effect */}
                 <defs>
                   <linearGradient id="bookFill" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor="#8a2be2" stopOpacity="0.8">
+                    <stop offset="0%" stopColor="#dc2626" stopOpacity="0.8">
                       <animate attributeName="offset" from="0" to="1" dur="5s" fill="freeze"/>
                     </stop>
-                    <stop offset="0%" stopColor="#8a2be2" stopOpacity="0">
+                    <stop offset="0%" stopColor="#dc2626" stopOpacity="0">
                       <animate attributeName="offset" from="0" to="1" dur="5s" fill="freeze"/>
                     </stop>
                   </linearGradient>
@@ -178,6 +193,9 @@ export default function App() {
       <Navbar 
         currentCategory={category} 
         onCategoryChange={handleCategoryChange}
+        gameControls={gameControls}
+        theme={theme}
+        onThemeToggle={() => setTheme(theme === 'light' ? 'dark' : 'light')}
       />
       <main className="main-content">
         {loading && <div className="loading">Loading...</div>}
@@ -187,6 +205,8 @@ export default function App() {
             gameData={gameData}
             category={category}
             onNewGame={handleNewGame}
+            setGameControls={setGameControls}
+            theme={theme}
           />
         )}
       </main>

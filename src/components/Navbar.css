@@ -1,7 +1,7 @@
 .navbar {
-  background: rgba(10, 5, 20, 0.9);
+  background: #000000;
   backdrop-filter: blur(10px);
-  border-bottom: 2px solid rgba(138, 43, 226, 0.5);
+  border-bottom: 3px solid #dc2626;
   padding: 1rem 0;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   position: relative;
@@ -50,11 +50,7 @@
 .navbar-title {
   font-size: 1.5rem;
   text-align: center;
-  background: linear-gradient(45deg, #ff6ec7, #b794f6, #48dbfb);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-shadow: 0 0 30px rgba(255, 110, 199, 0.3);
+  color: #ffffff;
   flex: 1;
   display: flex;
   align-items: center;
@@ -66,8 +62,80 @@
 .book-icon {
   width: 24px;
   height: 24px;
-  fill: #b794f6;
+  fill: #ffffff;
   flex-shrink: 0;
+}
+
+.navbar-controls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.hint-icon-btn,
+.reveal-icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #666;
+  background: #333;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.hint-icon-btn:hover:not(:disabled),
+.reveal-icon-btn:hover:not(:disabled) {
+  background: #555;
+  border-color: #888;
+  transform: scale(1.05);
+}
+
+.hint-icon-btn:disabled,
+.reveal-icon-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.hint-icon {
+  font-size: 1.2rem;
+}
+
+.reveal-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.theme-toggle-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #666;
+  background: #333;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.theme-toggle-btn:hover {
+  background: #555;
+  border-color: #888;
+  transform: scale(1.05);
+}
+
+.theme-toggle-btn svg {
+  width: 20px;
+  height: 20px;
 }
 
 .menu-overlay {
@@ -97,7 +165,7 @@
   bottom: 0;
   width: 280px;
   background: #000000;
-  border-right: 2px solid rgba(138,43, 226, 0.5);
+  border-right: 3px solid #dc2626;
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -124,16 +192,13 @@
   gap: 1rem;
   padding: 1rem 0;
   margin-bottom: 1rem;
-  border-bottom: 2px solid rgba(138, 43, 226, 0.3);
+  border-bottom: 2px solid #333;
 }
 
 .menu-title {
   font-size: 1.5rem;
   font-weight: bold;
-  background: linear-gradient(45deg, #ff6ec7, #b794f6, #48dbfb);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #ffffff;
   margin: 0;
 }
 
@@ -165,10 +230,10 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.75rem 1rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 2px solid rgba(138, 43, 226, 0.3);
+  background: #fff;
+  border: 2px solid #ddd;
   border-radius: 8px;
-  color: #fff;
+  color: #333;
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -176,13 +241,14 @@
 }
 
 .category-menu-item:hover {
-  background: rgba(138, 43, 226, 0.3);
-  border-color: rgba(138, 43, 226, 0.6);
+  background: #f5f5f5;
+  border-color: #999;
 }
 
 .category-menu-item.active {
-  background: linear-gradient(135deg, #8a2be2, #9b59b6);
-  border-color: #b794f6;
+  background: linear-gradient(135deg, #dc2626, #ef4444);
+  border-color: #dc2626;
+  color: #fff;
 }
 
 .category-icon {
@@ -235,6 +301,21 @@
     height: 36px;
   }
 
+  .hint-icon-btn,
+  .reveal-icon-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .hint-icon {
+    font-size: 1rem;
+  }
+
+  .reveal-icon {
+    width: 18px;
+    height: 18px;
+  }
+
   .category-menu {
     width: 240px;
   }
@@ -258,6 +339,25 @@
   .burger-menu svg {
     width: 20px;
     height: 20px;
+  }
+
+  .hint-icon-btn,
+  .reveal-icon-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .hint-icon {
+    font-size: 0.9rem;
+  }
+
+  .reveal-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .navbar-controls {
+    gap: 0.25rem;
   }
 
   .category-menu {

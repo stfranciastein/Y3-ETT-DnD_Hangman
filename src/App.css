@@ -4,11 +4,51 @@
   box-sizing: border-box;
 }
 
+/* Theme Variables */
+body[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: rgba(255, 255, 255, 0.9);
+  --bg-tertiary: rgba(0, 0, 0, 0.05);
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --text-inverse: #ffffff;
+  --border-color: #ddd;
+  --border-color-secondary: #e0e0e0;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --key-bg: #f5f5f5;
+  --key-border: #ddd;
+  --accent-color: #dc2626;
+  --accent-color-light: rgba(220, 38, 38, 0.2);
+  --accent-color-medium: rgba(220, 38, 38, 0.5);
+}
+
+body[data-theme="dark"] {
+  --bg-primary: #000000;
+  --bg-secondary: #1a1a1a;
+  --bg-tertiary: #2a2a2a;
+  --text-primary: #ffffff;
+  --text-secondary: #f87171;
+  --text-inverse: #333333;
+  --border-color: #555;
+  --border-color-secondary: #444;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+  --key-bg: #2a2a2a;
+  --key-border: #555;
+  --accent-color: #ef4444;
+  --accent-color-light: rgba(239, 68, 68, 0.2);
+  --accent-color-medium: rgba(239, 68, 68, 0.5);
+}
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #1e0a3c 0%, #3a1f5d 100%);
+  background-image: url('./assets/parchment.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
   min-height: 100vh;
-  color: #fff;
+  color: var(--text-primary);
+  transition: color 0.3s ease;
 }
 
 .app {
@@ -55,7 +95,7 @@ body {
 .loading-title {
   font-size: 2.5rem;
   margin-bottom: 2rem;
-  background: linear-gradient(45deg, #ff6ec7, #b794f6, #48dbfb);
+  background: linear-gradient(45deg, #dc2626, #ef4444, #f87171);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -72,14 +112,14 @@ body {
 .book-svg {
   width: 100%;
   height: 100%;
-  filter: drop-shadow(0 0 10px rgba(138, 43, 226, 0.5));
+  filter: drop-shadow(0 0 10px rgba(220, 38, 38, 0.5));
 }
 
 .spinner {
   width: 60px;
   height: 60px;
-  border: 5px solid rgba(138, 43, 226, 0.2);
-  border-top: 5px solid #8a2be2;
+  border: 5px solid rgba(220, 38, 38, 0.2);
+  border-top: 5px solid #dc2626;
   border-radius: 50%;
   margin: 2rem auto;
   animation: spin 1s linear infinite;
@@ -97,7 +137,7 @@ body {
 
 .joke-container {
   background: rgba(255, 255, 255, 0.05);
-  border: 2px solid rgba(138, 43, 226, 0.3);
+  border: 2px solid rgba(220, 38, 38, 0.3);
   border-radius: 15px;
   padding: 2rem;
   margin: 2rem 0;

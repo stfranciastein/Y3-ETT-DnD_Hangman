@@ -5,22 +5,13 @@
 }
 
 .game-container {
-  background: rgba(255, 255, 255, 0.05);
-  border: 2px solid rgba(138, 43, 226, 0.3);
+  background: var(--bg-primary);
+  border: none;
   border-radius: 20px;
   padding: 2rem;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 8px 32px rgba(138, 43, 226, 0.2);
+  box-shadow: 0 10px 40px var(--shadow-color);
   position: relative;
-}
-
-.top-controls {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  display: flex;
-  gap: 0.5rem;
-  z-index: 10;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 .hangman-display {
@@ -56,24 +47,23 @@
 .letter-box {
   width: 50px;
   height: 60px;
-  border: 3px solid rgba(138, 43, 226, 0.5);
+  border: 3px solid var(--border-color);
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-tertiary);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 2rem;
   font-weight: bold;
   font-family: 'Courier New', monospace;
-  color: #fff;
-  text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  color: var(--text-primary);
+  box-shadow: 0 2px 4px var(--shadow-color);
   transition: all 0.3s ease;
 }
 
 .letter-box:not(:empty) {
-  background: rgba(138, 43, 226, 0.2);
-  border-color: #b794f6;
+  background: var(--accent-color-light);
+  border-color: var(--accent-color);
 }
 
 .word-space {
@@ -84,7 +74,7 @@
 .word-punctuation {
   font-size: 2rem;
   font-weight: bold;
-  color: #fff;
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -96,53 +86,13 @@
   gap: 0.5rem;
 }
 
-.hint-icon-btn,
-.reveal-icon-btn {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  background: rgba(138, 43, 226, 0.3);
-  border: 2px solid rgba(138, 43, 226, 0.5);
-  color: #fff;
-  font-size: 1.5rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-}
-
-.hint-icon-btn:hover:not(:disabled),
-.reveal-icon-btn:hover:not(:disabled) {
-  background: rgba(138, 43, 226, 0.6);
-  transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(138, 43, 226, 0.6);
-}
-
-.hint-icon-btn:disabled,
-.reveal-icon-btn:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-}
-
-.hint-icon {
-  font-weight: bold;
-  font-size: 1.8rem;
-}
-
-.reveal-icon {
-  width: 20px;
-  height: 20px;
-}
-
 .hint-display {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  background: rgba(138, 43, 226, 0.2);
-  border: 2px solid rgba(138, 43, 226, 0.5);
+  background: var(--accent-color-light);
+  border: 2px solid var(--accent-color-medium);
   border-radius: 10px;
   padding: 1rem;
   margin: 1rem auto;
@@ -159,9 +109,9 @@
   width: 35px;
   height: 35px;
   border-radius: 50%;
-  background: rgba(138, 43, 226, 0.3);
-  border: 2px solid rgba(138, 43, 226, 0.5);
-  color: #fff;
+  background: var(--accent-color-light);
+  border: 2px solid var(--accent-color-medium);
+  color: var(--text-primary);
   font-size: 1.5rem;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -172,7 +122,7 @@
 }
 
 .hint-nav-btn:hover:not(:disabled) {
-  background: rgba(138, 43, 226, 0.6);
+  background: var(--accent-color-medium);
   transform: scale(1.1);
 }
 
@@ -184,13 +134,13 @@
 .hint-label {
   display: block;
   font-weight: bold;
-  color: #b794f6;
+  color: var(--accent-color);
   font-size: 1rem;
   margin-bottom: 0.5rem;
 }
 
 .hint-text {
-  color: #fff;
+  color: var(--text-primary);
   line-height: 1.6;
   margin: 0;
 }
@@ -238,19 +188,19 @@
 
 .hint-btn, .reveal-btn {
   padding: 0.75rem 1.5rem;
-  background: rgba(138, 43, 226, 0.3);
-  border: 2px solid rgba(138, 43, 226, 0.5);
+  background: var(--accent-color-light);
+  border: 2px solid var(--accent-color-medium);
   border-radius: 10px;
-  color: #fff;
+  color: var(--text-primary);
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .hint-btn:hover:not(:disabled), .reveal-btn:hover:not(:disabled) {
-  background: rgba(138, 43, 226, 0.5);
+  background: var(--accent-color-medium);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(138, 43, 226, 0.4);
+  box-shadow: 0 4px 12px var(--accent-color-medium);
 }
 
 .hint-btn:disabled, .reveal-btn:disabled {
@@ -259,10 +209,10 @@
 }
 
 .hint-text {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-tertiary);
   padding: 1rem;
   border-radius: 10px;
-  border: 2px solid rgba(138, 43, 226, 0.3);
+  border: 2px solid var(--border-color-secondary);
   max-width: 600px;
   text-align: center;
   line-height: 1.6;
@@ -295,40 +245,12 @@
   min-width: 40px;
   font-size: 1rem;
   font-weight: bold;
-  background: rgba(255, 255, 255, 0.1);
-  border: 3px solid rgba(138, 43, 226, 0.5);
+  background: var(--key-bg);
+  border: 3px solid var(--key-border);
   border-radius: 8px;
-  color: #fff;
+  color: var(--text-primary);
   cursor: pointer;
-  tcontainer-header {
-    flex-direction: column;
-    gap: 1rem;
-    align-items: flex-start;
-  }
-
-  .hint-controls {
-    align-self: flex-end;
-  }
-
-  .word-display {
-    gap: 0.3rem;
-  }
-
-  .letter-box {
-    width: 40px;
-    height: 50px;
-    font-size: 1.5rem;
-    border-width: 2px;
-  }
-
-  .letter-special {
-    font-size: 1.5rem;
-  }
-
-  .letter-space {
-    width: 15px;
-    height: 50px;
-  }
+  transition: all 0.3s ease;
 }
 
 .key:disabled {
@@ -351,8 +273,8 @@
   padding: 1rem;
   font-size: 1.2rem;
   font-weight: bold;
-  background: linear-gradient(135deg, #8a2be2, #9b59b6);
-  border: 2px solid #b794f6;
+  background: linear-gradient(135deg, #dc2626, #ef4444);
+  border: 2px solid #dc2626;
   border-radius: 10px;
   color: #fff;
   cursor: pointer;
@@ -365,7 +287,7 @@
 
 .new-game-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(138, 43, 226, 0.6);
+  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.6);
 }
 
 /* Responsive Design */

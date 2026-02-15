@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import './GameBoard.css';
 
-export default function GameBoard({ gameData, category, onNewGame }) {
+export default function GameBoard({ gameData, category, onNewGame, setGameControls, theme }) {
   const [guessedLetters, setGuessedLetters] = useState([]);
   const [wrongGuesses, setWrongGuesses] = useState(0);
   const [gameWon, setGameWon] = useState(false);
@@ -14,6 +14,9 @@ export default function GameBoard({ gameData, category, onNewGame }) {
   const maxHints = 3;
 
   const word = gameData.name.toUpperCase();
+  
+  // Dynamic colors based on theme
+  const hangmanColor = theme === 'light' ? '#333' : '#fff';
   
   const keyboardRows = [
     ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
@@ -85,7 +88,21 @@ export default function GameBoard({ gameData, category, onNewGame }) {
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [isDesktop, handleGuess]);
 
-  const handleRevealLetter = () => {
+  const toggleHint = useCallback(() => {
+    if (maxRevealedHintLevel < maxHints) {
+      // Reveal next hint
+      const nextLevel = maxRevealedHintLevel + 1;
+      setMaxRevealedHintLevel(nextLevel);
+      setHintLevel(nextLevel);
+      setShowHint(true);
+    } else if (hintLevel < maxHints) {
+      // All hints revealed, just advance to next one
+      setHintLevel(hintLevel + 1);
+      setShowHint(true);
+    }
+  }, [maxRevealedHintLevel, maxHints, hintLevel]);
+
+  const handleRevealLetter = useCallback(() => {
     if (gameWon || gameLost) return;
     
     const wordLetters = word.split('').filter(char => /[A-Z]/.test(char));
@@ -95,7 +112,20 @@ export default function GameBoard({ gameData, category, onNewGame }) {
       const randomLetter = unguessedLetters[Math.floor(Math.random() * unguessedLetters.length)];
       setGuessedLetters([...guessedLetters, randomLetter]);
     }
-  };
+  }, [gameWon, gameLost, word, guessedLetters]);
+
+  // Update game controls for navbar
+  useEffect(() => {
+    setGameControls({
+      onHintClick: toggleHint,
+      onRevealLetter: handleRevealLetter,
+      hintDisabled: gameWon || gameLost || maxRevealedHintLevel >= maxHints,
+      revealDisabled: gameWon || gameLost,
+      hintTitle: maxRevealedHintLevel < maxHints ? `Reveal Hint ${maxRevealedHintLevel + 1}/${maxHints}` : `All hints revealed`,
+      maxRevealedHintLevel,
+      maxHints
+    });
+  }, [gameWon, gameLost, maxRevealedHintLevel, maxHints, guessedLetters, toggleHint, handleRevealLetter, setGameControls]);
 
   const displayWord = () => {
     return word.split('').map((char, index) => {
@@ -198,20 +228,6 @@ export default function GameBoard({ gameData, category, onNewGame }) {
     }
   };
 
-  const toggleHint = () => {
-    if (maxRevealedHintLevel < maxHints) {
-      // Reveal next hint
-      const nextLevel = maxRevealedHintLevel + 1;
-      setMaxRevealedHintLevel(nextLevel);
-      setHintLevel(nextLevel);
-      setShowHint(true);
-    } else if (hintLevel < maxHints) {
-      // All hints revealed, just advance to next one
-      setHintLevel(hintLevel + 1);
-      setShowHint(true);
-    }
-  };
-
   const handleNewGame = () => {
     onNewGame();
   };
@@ -219,27 +235,6 @@ export default function GameBoard({ gameData, category, onNewGame }) {
   return (
     <div className="game-board">
       <div className="game-container">
-        <div className="top-controls">
-          <button 
-            className="hint-icon-btn"
-            onClick={toggleHint}
-            disabled={gameWon || gameLost || maxRevealedHintLevel >= maxHints}
-            title={maxRevealedHintLevel < maxHints ? `Reveal Hint ${maxRevealedHintLevel + 1}/${maxHints}` : `All hints revealed`}
-          >
-            <span className="hint-icon">?</span>
-          </button>
-          <button 
-            className="reveal-icon-btn"
-            onClick={handleRevealLetter}
-            disabled={gameWon || gameLost}
-            title="Reveal a letter"
-          >
-            <svg viewBox="0 0 24 24" fill="currentColor" className="reveal-icon">
-              <path d="M12 2L15 8L21 9L16 14L18 21L12 17L6 21L8 14L3 9L9 8L12 2Z" />
-            </svg>
-          </button>
-        </div>
-
         <div className="hangman-display">
           <svg viewBox="0 0 200 250" className="hangman-svg">
             {/* Gallows */}
@@ -249,22 +244,22 @@ export default function GameBoard({ gameData, category, onNewGame }) {
             <line x1="130" y1="20" x2="130" y2="50" stroke="#8b4513" strokeWidth="4" />
             
             {/* Head */}
-            {wrongGuesses >= 1 && <circle cx="130" cy="70" r="20" stroke="#fff" strokeWidth="3" fill="none" />}
+            {wrongGuesses >= 1 && <circle cx="130" cy="70" r="20" stroke={hangmanColor} strokeWidth="3" fill="none" />}
             
             {/* Body */}
-            {wrongGuesses >= 2 && <line x1="130" y1="90" x2="130" y2="150" stroke="#fff" strokeWidth="3" />}
+            {wrongGuesses >= 2 && <line x1="130" y1="90" x2="130" y2="150" stroke={hangmanColor} strokeWidth="3" />}
             
             {/* Left arm */}
-            {wrongGuesses >= 3 && <line x1="130" y1="110" x2="100" y2="130" stroke="#fff" strokeWidth="3" />}
+            {wrongGuesses >= 3 && <line x1="130" y1="110" x2="100" y2="130" stroke={hangmanColor} strokeWidth="3" />}
             
             {/* Right arm */}
-            {wrongGuesses >= 4 && <line x1="130" y1="110" x2="160" y2="130" stroke="#fff" strokeWidth="3" />}
+            {wrongGuesses >= 4 && <line x1="130" y1="110" x2="160" y2="130" stroke={hangmanColor} strokeWidth="3" />}
             
             {/* Left leg */}
-            {wrongGuesses >= 5 && <line x1="130" y1="150" x2="110" y2="190" stroke="#fff" strokeWidth="3" />}
+            {wrongGuesses >= 5 && <line x1="130" y1="150" x2="110" y2="190" stroke={hangmanColor} strokeWidth="3" />}
             
             {/* Right leg */}
-            {wrongGuesses >= 6 && <line x1="130" y1="150" x2="150" y2="190" stroke="#fff" strokeWidth="3" />}
+            {wrongGuesses >= 6 && <line x1="130" y1="150" x2="150" y2="190" stroke={hangmanColor} strokeWidth="3" />}
           </svg>
         </div>
 
