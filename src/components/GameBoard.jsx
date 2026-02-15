@@ -16,7 +16,28 @@ export default function GameBoard({ gameData, category, onNewGame, setGameContro
   const word = gameData.name.toUpperCase();
   
   // Dynamic colors based on theme
-  const hangmanColor = theme === 'light' ? '#333' : '#fff';
+  const iconColor = theme === 'light' ? '#333' : '#fff';
+
+  const renderBooks = () => {
+    return (
+      <div className="books-display">
+        {[1, 2, 3, 4, 5, 6].map((bookNum) => (
+          <div key={bookNum} className="book-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke={iconColor} strokeWidth="2">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+            </svg>
+            {wrongGuesses >= bookNum && (
+              <svg viewBox="0 0 24 24" className="x-mark" fill="none" stroke="#dc2626" strokeWidth="3" strokeLinecap="round">
+                <line x1="6" y1="6" x2="18" y2="18" />
+                <line x1="18" y1="6" x2="6" y2="18" />
+              </svg>
+            )}
+          </div>
+        ))}
+      </div>
+    );
+  };
   
   const keyboardRows = [
     ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
@@ -235,33 +256,7 @@ export default function GameBoard({ gameData, category, onNewGame, setGameContro
   return (
     <div className="game-board">
       <div className="game-container">
-        <div className="hangman-display">
-          <svg viewBox="0 0 200 250" className="hangman-svg">
-            {/* Gallows */}
-            <line x1="10" y1="230" x2="150" y2="230" stroke="#8b4513" strokeWidth="4" />
-            <line x1="50" y1="230" x2="50" y2="20" stroke="#8b4513" strokeWidth="4" />
-            <line x1="50" y1="20" x2="130" y2="20" stroke="#8b4513" strokeWidth="4" />
-            <line x1="130" y1="20" x2="130" y2="50" stroke="#8b4513" strokeWidth="4" />
-            
-            {/* Head */}
-            {wrongGuesses >= 1 && <circle cx="130" cy="70" r="20" stroke={hangmanColor} strokeWidth="3" fill="none" />}
-            
-            {/* Body */}
-            {wrongGuesses >= 2 && <line x1="130" y1="90" x2="130" y2="150" stroke={hangmanColor} strokeWidth="3" />}
-            
-            {/* Left arm */}
-            {wrongGuesses >= 3 && <line x1="130" y1="110" x2="100" y2="130" stroke={hangmanColor} strokeWidth="3" />}
-            
-            {/* Right arm */}
-            {wrongGuesses >= 4 && <line x1="130" y1="110" x2="160" y2="130" stroke={hangmanColor} strokeWidth="3" />}
-            
-            {/* Left leg */}
-            {wrongGuesses >= 5 && <line x1="130" y1="150" x2="110" y2="190" stroke={hangmanColor} strokeWidth="3" />}
-            
-            {/* Right leg */}
-            {wrongGuesses >= 6 && <line x1="130" y1="150" x2="150" y2="190" stroke={hangmanColor} strokeWidth="3" />}
-          </svg>
-        </div>
+        {renderBooks()}
 
         <div className="word-display">
           {renderWordBoxes()}
