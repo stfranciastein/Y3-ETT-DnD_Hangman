@@ -10,6 +10,9 @@ export default function GameBoard({ gameData, category, onNewGame, setGameContro
   const [hintLevel, setHintLevel] = useState(0);
   const [maxRevealedHintLevel, setMaxRevealedHintLevel] = useState(0);
   const [isDesktop, setIsDesktop] = useState(window.innerWidth > 768);
+  const [score, setScore] = useState(1000);
+  const [_hintsUsed, setHintsUsed] = useState(0);
+  const [_lettersRevealed, setLettersRevealed] = useState(0);
   const maxWrongGuesses = 6;
   const maxHints = 3;
 
@@ -23,9 +26,10 @@ export default function GameBoard({ gameData, category, onNewGame, setGameContro
       <div className="books-display">
         {[1, 2, 3, 4, 5, 6].map((bookNum) => (
           <div key={bookNum} className="book-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke={iconColor} strokeWidth="2">
-              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
-              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+            <svg viewBox="0 0 24 24" fill="none" stroke={iconColor} strokeWidth="1.5">
+              {/* Open book */}
+              <path d="M12 3C8.5 3 6 4.5 4 6.5V19C6 17 8.5 16 12 16C15.5 16 18 17 20 19V6.5C18 4.5 15.5 3 12 3Z" />
+              <path d="M12 3V16" />
             </svg>
             {wrongGuesses >= bookNum && (
               <svg viewBox="0 0 24 24" className="x-mark" fill="none" stroke="#dc2626" strokeWidth="3" strokeLinecap="round">
@@ -54,6 +58,9 @@ export default function GameBoard({ gameData, category, onNewGame, setGameContro
     setShowHint(false);
     setHintLevel(0);
     setMaxRevealedHintLevel(0);
+    setScore(1000);
+    setHintsUsed(0);
+    setLettersRevealed(0);
   }, [gameData]);
 
   useEffect(() => {
@@ -80,6 +87,7 @@ export default function GameBoard({ gameData, category, onNewGame, setGameContro
 
     if (!word.includes(letter)) {
       setWrongGuesses(wrongGuesses + 1);
+      setScore(prevScore => Math.max(0, prevScore - 50));
     }
   }, [guessedLetters, gameWon, gameLost, word, wrongGuesses]);
 
@@ -116,6 +124,8 @@ export default function GameBoard({ gameData, category, onNewGame, setGameContro
       setMaxRevealedHintLevel(nextLevel);
       setHintLevel(nextLevel);
       setShowHint(true);
+      setHintsUsed(prev => prev + 1);
+      setScore(prevScore => Math.max(0, prevScore - 100));
     } else if (hintLevel < maxHints) {
       // All hints revealed, just advance to next one
       setHintLevel(hintLevel + 1);
@@ -132,6 +142,8 @@ export default function GameBoard({ gameData, category, onNewGame, setGameContro
     if (unguessedLetters.length > 0) {
       const randomLetter = unguessedLetters[Math.floor(Math.random() * unguessedLetters.length)];
       setGuessedLetters([...guessedLetters, randomLetter]);
+      setLettersRevealed(prev => prev + 1);
+      setScore(prevScore => Math.max(0, prevScore - 75));
     }
   }, [gameWon, gameLost, word, guessedLetters]);
 
@@ -256,6 +268,11 @@ export default function GameBoard({ gameData, category, onNewGame, setGameContro
   return (
     <div className="game-board">
       <div className="game-container">
+        <div className="score-display">
+          <div className="score-value">{score}</div>
+          <div className="score-label">Score</div>
+        </div>
+
         {renderBooks()}
 
         <div className="word-display">
